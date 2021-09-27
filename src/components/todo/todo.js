@@ -6,6 +6,8 @@ import Header from '../header/header.js';
 import Form from '../form/form.js';
 import List from '../list/list.js';
 import { SettingsContext } from '../../context/setting/context';
+import NotesPerPage from '../notesPerPage/notesPerPage.js';
+const store = require('store')
 
 
 const ToDo = () => {
@@ -16,14 +18,29 @@ const ToDo = () => {
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
 
+  //local storage 
+  const data = store.get('Notes')
+
+
+
   const [startPage, setStartPage] = useState(0);
   const [endPage, setEndPage] = useState(settings.itemNumber);
+
+  function getItem() {
+    setList(data);
+    // setEndPage(store.get('number'))
+  }
+
+
+
 
   function addItem(item) {
     console.log(item);
     item.id = uuid();
     item.complete = false;
-    setList([...list, item]);
+    setList([...list, item]);//
+    console.log(list, 'liiit');
+    store.set('Notes', list)
   }
 
   function deleteItem(id) {
@@ -42,13 +59,22 @@ const ToDo = () => {
 
     setList(items);
 
-  }
+  };
+
+  // getting element from local storage
+  useEffect(() => {
+    if (data !== undefined) {
+      console.log('getting data')
+      getItem()
+    }
+
+  }, [])
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
     setIncomplete(incompleteCount);
     document.title = `To Do List: ${incomplete}`;
-  }, [list]);
+  }, [list]); 
 
   function pagination() {
     let result = list.slice(startPage, endPage);
@@ -73,6 +99,7 @@ const ToDo = () => {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
+      <NotesPerPage setEndPage={setEndPage} />
 
       <List
         pagination={pagination}
