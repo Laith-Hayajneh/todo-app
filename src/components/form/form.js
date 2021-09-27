@@ -1,35 +1,35 @@
 'use strict';
 import React from "react";
-import { Button } from '@blueprintjs/core';
+import { Button } from '@mui/material';
 import './form.scss'
+import Form from 'react-bootstrap/Form'
 
-function Form(props) {
+function Form1(props) {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <Form onSubmit={props.handleSubmit}>
 
             <h2>Add To Do Item</h2>
 
-            <label>
+            <Form.Label>
                 <span>To Do Item</span>
                 <input onChange={props.handleChange} name="text" type="text" placeholder="Item Details" />
-            </label>
+            </Form.Label>
 
-            <label>
+            <Form.Label>
                 <span>Assigned To</span>
                 <input onChange={props.handleChange} name="assignee" type="text" placeholder="Assignee Name" />
-            </label>
+            </Form.Label>
+            <br/>
+            <Form.Label>
+            <span>Difficulty</span>
+            <input onChange={props.handleChange} defaultValue={3} type ="range" min={1} max={5} name="difficulty" />
+            </Form.Label>
 
-            <label>
-                <span>Difficulty</span>
-                <input onChange={props.handleChange} defaultValue={3} type="range" min={1} max={5} name="difficulty" />
-            </label>
-
-            <label>
-                <Button  class="bp3-intent-primary
-"  icon='add' type="submit"  >Add Item</Button>
-            </label>
-        </form>
+            <Form.Label>
+            <Button  variant="contained" type ="submit"  >Add Item</Button>
+            </Form.Label>
+        </Form>
     )
 }
 
-export default Form
+export default Form1
