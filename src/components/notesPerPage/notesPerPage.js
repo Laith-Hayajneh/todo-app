@@ -22,7 +22,7 @@ const NotesPerPage = (props) => {
     
 }
     return (
-        <FormControl fullWidth >
+        <FormControl fullWidth style={{marginTop: "50px"}} >
             <InputLabel id="demo-simple-select-label">Number of List</InputLabel>
             <Select
                 labelId="demo-simple-select-label"

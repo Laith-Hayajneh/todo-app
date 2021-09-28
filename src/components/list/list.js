@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card, Elevation } from '@blueprintjs/core';
+import Auth from '../../context/auth/auth';
 
 function List(props) {
     return (
@@ -14,13 +15,19 @@ function List(props) {
                         {
                             (!item.complete)
                                 ? (
-                                    <Button onClick={() => props.toggleComplete(item.id)}>Complete: {item.complete.toString()}</Button>
+                                    <Auth capability="create">
+
+                                        <Button onClick={() => props.toggleComplete(item.id)}>Complete: {item.complete.toString()}</Button>
+                                    </Auth>
                                 )
                                 : (
                                     <>
+                                    <Auth capability="create">
+
                                         <Button onClick={() => props.toggleComplete(item.id)}>Complete: {item.complete.toString()}</Button>
                                         <br></br>
                                         <Button onClick={() => props.deleteItem(item.id)}>Delete </Button>
+                                    </Auth>
                                     </>
                                 )
                         }

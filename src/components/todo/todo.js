@@ -7,6 +7,7 @@ import Form from '../form/form.js';
 import List from '../list/list.js';
 import { SettingsContext } from '../../context/setting/context';
 import NotesPerPage from '../notesPerPage/notesPerPage.js';
+import Auth from '../../context/auth/auth';
 const store = require('store')
 
 
@@ -74,7 +75,7 @@ const ToDo = () => {
     let incompleteCount = list.filter(item => !item.complete).length;
     setIncomplete(incompleteCount);
     document.title = `To Do List: ${incomplete}`;
-  }, [list]); 
+  }, [list]);
 
   function pagination() {
     let result = list.slice(startPage, endPage);
@@ -94,12 +95,16 @@ const ToDo = () => {
     <>
       <Header incomplete={incomplete} />
 
+      <Auth capability="create">
+        <Form
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+        />
 
-      <Form
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-      />
       <NotesPerPage setEndPage={setEndPage} />
+      </Auth>
+
+      <Auth capability="read">
 
       <List
         pagination={pagination}
@@ -108,6 +113,8 @@ const ToDo = () => {
         toggleComplete={toggleComplete}
         deleteItem={deleteItem}
       />
+      </Auth>
+
 
     </>
   );
